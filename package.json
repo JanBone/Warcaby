@@ -1,0 +1,20 @@
+{
+  "name": "checkers",
+  "version": "1.0.0",
+  "description": "Gra warcaby",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./server/index.js"
+  },
+  "engines": {
+    "node": "14.x"
+  },
+  "author": "Katsiaryna Yalovik",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "http": "0.0.1-security",
+    "socket.io": "^3.1.0"
+  }
+}

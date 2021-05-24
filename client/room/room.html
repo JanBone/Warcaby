@@ -1,0 +1,196 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="script.js"></script>
+        <title>Checkers game</title>
+    </head>
+
+    <body>
+        <style>
+            body {
+                background-color: #B0C4DE;
+            }
+            h1 {
+                margin: 0 0 .5em;
+                padding: 0;
+            }
+
+            .animate-reveal {
+            font: bold 1.5em Fantasy;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0;
+            -webkit-animation: reveal 1s cubic-bezier(0, 1, 0.5, 1) 1 normal forwards;
+            -moz-animation: reveal 1s ease-in 1 normal forwards;
+            -o-animation: reveal 1s cubic-bezier(0, 1, 0.5, 1) 1 normal forwards;
+            animation: reveal 1s cubic-bezier(0, 1, 0.5, 1) 1 normal forwards;
+            }
+
+            .animate-first {
+            -webkit-animation-delay: 0;
+            -moz-animation-delay: 0;
+            -o-animation-delay: 0;
+            animation-delay: 0;
+            }
+
+            .animate-second {
+            -webkit-animation-delay: 500ms;
+            -moz-animation-delay: 500ms;
+            -o-animation-delay: 500ms;
+            animation-delay: 500ms;
+            }
+
+            .animate-third {
+            -webkit-animation-delay: 1s;
+            -moz-animation-delay: 1s;
+            -o-animation-delay: 1s;
+            animation-delay: 1s;
+            }
+
+            @-webkit-keyframes reveal {
+            0% {
+            opacity: 0;
+            -webkit-transform: translateY(100%);
+            -moz-transform: translateY(100%);
+            -o-transform: translateY(100%);
+            transform: translateY(100%);
+            }
+            100% {
+            opacity: 1;
+            -webkit-transform: translateY(0);
+            -moz-transform: translateY(0);
+            -o-transform: translateY(0);
+            transform: translateY(0);
+            }
+        }
+
+            @-moz-keyframes reveal {
+            0% {
+            opacity: 0;
+            -webkit-transform: translateY(100%);
+            -moz-transform: translateY(100%);
+            -o-transform: translateY(100%);
+            transform: translateY(100%);
+            }
+            100% {
+            opacity: 1;
+            -webkit-transform: translateY(0);
+            -moz-transform: translateY(0);
+            -o-transform: translateY(0);
+            transform: translateY(0);
+            }
+        }
+
+@-o-keyframes reveal {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(100%);
+       -moz-transform: translateY(100%);
+         -o-transform: translateY(100%);
+            transform: translateY(100%);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+       -moz-transform: translateY(0);
+         -o-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+
+@keyframes reveal {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(100%);
+       -moz-transform: translateY(100%);
+         -o-transform: translateY(100%);
+            transform: translateY(100%);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+       -moz-transform: translateY(0);
+         -o-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+           
+
+
+            .board {
+                text-align:center;
+                width: 100%;
+                display :block;
+            }
+
+            .board button {
+                height: 50px;
+                width: 50px;
+                float: left; 
+                margin: 1px;
+                font-size: 2em;
+                font-weight: 900;
+            }
+
+            #message {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+                text-align: center;
+            }
+            .whites{
+                color : white;
+                background:url(./c_white.png) no-repeat;
+                background-size:cover;
+            }
+            .blacks{
+                color : black;
+                background:url(./c_black.png) no-repeat;
+                background-size:cover;
+            }
+            .blacks-crown{
+                color : black;
+                background:url(./black_crown.png) no-repeat;
+                background-size:cover;
+            }
+            .whites-crown{
+                color : black;
+                background:url(./white_crown.png) no-repeat;
+                background-size:cover;
+            }
+            .empty_whites{
+                color : black;
+                background:url(./empty_white.png) no-repeat;
+                background-size:cover;
+            }
+            .empty_blacks{
+                color : black;
+                background:url(./empty_black.png) no-repeat;
+                background-size:cover;
+            }
+            .inner
+            {
+            display: inline-block;
+            margin: 0 auto;
+            }
+        </style>
+        <div>
+            <h1 class="animate-reveal animate-first">Checkers</h1>
+            
+          </div>
+        <div id="message">Poczekaj na przeciwnika...</div>
+
+        <div class="board">
+            <div class="inner"> <button id="x0y0"></button> <button id="x1y0"></button> <button id="x2y0"></button><button id="x3y0"></button> <button id="x4y0"></button> <button id="x5y0"></button><button id="x6y0"></button> <button id="x7y0"></button></div><br>
+
+            <div class="inner"> <button id="x0y1"></button> <button id="x1y1"></button> <button id="x2y1"></button><button id="x3y1"></button> <button id="x4y1"></button> <button id="x5y1"></button><button id="x6y1"></button> <button id="x7y1"></button></div><br>
+            <div class="inner"><button id="x0y2"></button> <button id="x1y2"></button> <button id="x2y2"></button><button id="x3y2"></button> <button id="x4y2"></button> <button id="x5y2"></button><button id="x6y2"></button> <button id="x7y2"></button></div><br>
+            <div class="inner"><button id="x0y3"></button> <button id="x1y3"></button> <button id="x2y3"></button><button id="x3y3"></button> <button id="x4y3"></button> <button id="x5y3"></button><button id="x6y3"></button> <button id="x7y3"></button></div><br>
+            <div class="inner"><button id="x0y4"></button> <button id="x1y4"></button> <button id="x2y4"></button><button id="x3y4"></button> <button id="x4y4"></button> <button id="x5y4"></button><button id="x6y4"></button> <button id="x7y4"></button></div><br>
+            <div class="inner"><button id="x0y5"></button> <button id="x1y5"></button> <button id="x2y5"></button><button id="x3y5"></button> <button id="x4y5"></button> <button id="x5y5"></button><button id="x6y5"></button> <button id="x7y5"></button></div><br>
+            <div class="inner"><button id="x0y6"></button> <button id="x1y6"></button> <button id="x2y6"></button><button id="x3y6"></button> <button id="x4y6"></button> <button id="x5y6"></button><button id="x6y6"></button> <button id="x7y6"></button></div><br>
+            <div class="inner"><button id="x0y7"></button> <button id="x1y7"></button> <button id="x2y7"></button><button id="x3y7"></button> <button id="x4y7"></button> <button id="x5y7"></button><button id="x6y7"></button> <button id="x7y7"></button></div>
+        </div>
+
+    </body>
+</html>

@@ -1,0 +1,205 @@
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="socket.io/socket.io.js"></script>
+        <script src="script_main_page.js"></script>
+        <title>Checkers game</title>
+    </head>
+
+    <body>
+        <style>
+          
+#div1{
+  text-align:center;
+  padding: 10px;
+}
+body{
+  font-stretch: ultra-condensed
+}
+
+.table {
+	display: table;   /* Allow the centering to work */
+	margin: 0 auto;
+}
+ul li {
+  padding-left: 0;
+  list-style-type: none;
+  margin: auto;
+  margin-top: 2px;
+  padding: 2px 5px;
+  width: 35%;
+  background: #eee;
+  border: solid 2px #5F9EA0;
+  border-radius: 10px;
+  font: 1em serif;
+  background: #ADD8E6;
+ 
+}
+ul {
+    margin: 0; 
+    padding: 0; 
+}
+input {
+  outline-width: 0;
+  margin: 5px;
+  padding: 5px;
+  width: 50%;
+  border: solid 2px #5F9EA0;
+  border-radius: 10px;
+  font: 1em serif;
+}
+
+button {
+  font: 0.7em bold serif;
+ 
+  margin: 10px;
+  padding: 2px;
+  width: 25%;
+  background: #ADD8E6;
+  text-align: center;
+  border: solid 2px #5F9EA0;
+  border-radius: 10px;
+}
+
+.addBtn:hover {
+  background-color: #bbb;
+}
+            body {
+                background-color: #B0C4DE;
+            }
+            
+
+            .animate-reveal {
+           
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0;
+            -webkit-animation: reveal 1s cubic-bezier(0, 1, 0.5, 1) 1 normal forwards;
+            -moz-animation: reveal 1s ease-in 1 normal forwards;
+            -o-animation: reveal 1s cubic-bezier(0, 1, 0.5, 1) 1 normal forwards;
+            animation: reveal 1s cubic-bezier(0, 1, 0.5, 1) 1 normal forwards;
+            }
+
+            .animate-first {
+            -webkit-animation-delay: 0;
+            -moz-animation-delay: 0;
+            -o-animation-delay: 0;
+            animation-delay: 0;
+            }
+
+            .animate-second {
+            -webkit-animation-delay: 500ms;
+            -moz-animation-delay: 500ms;
+            -o-animation-delay: 500ms;
+            animation-delay: 500ms;
+            }
+
+            .animate-third {
+            -webkit-animation-delay: 1s;
+            -moz-animation-delay: 1s;
+            -o-animation-delay: 1s;
+            animation-delay: 1s;
+            }
+
+            @-webkit-keyframes reveal {
+            0% {
+            opacity: 0;
+            -webkit-transform: translateY(100%);
+            -moz-transform: translateY(100%);
+            -o-transform: translateY(100%);
+            transform: translateY(100%);
+            }
+            100% {
+            opacity: 1;
+            -webkit-transform: translateY(0);
+            -moz-transform: translateY(0);
+            -o-transform: translateY(0);
+            transform: translateY(0);
+            }
+        }
+
+            @-moz-keyframes reveal {
+            0% {
+            opacity: 0;
+            -webkit-transform: translateY(100%);
+            -moz-transform: translateY(100%);
+            -o-transform: translateY(100%);
+            transform: translateY(100%);
+            }
+            100% {
+            opacity: 1;
+            -webkit-transform: translateY(0);
+            -moz-transform: translateY(0);
+            -o-transform: translateY(0);
+            transform: translateY(0);
+            }
+        }
+
+          @-o-keyframes reveal {
+           0% {
+          opacity: 0;
+          -webkit-transform: translateY(100%);
+          -moz-transform: translateY(100%);
+          -o-transform: translateY(100%);
+          transform: translateY(100%);
+        }
+        100% {
+      opacity: 1;
+      -webkit-transform: translateY(0);
+       -moz-transform: translateY(0);
+         -o-transform: translateY(0);
+            transform: translateY(0);
+      }
+      }
+
+@keyframes reveal {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(100%);
+       -moz-transform: translateY(100%);
+         -o-transform: translateY(100%);
+            transform: translateY(100%);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+       -moz-transform: translateY(0);
+         -o-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+           
+
+#message {
+font-size: 2rem;
+margin-bottom: 1rem;
+text-align: center;
+}
+h1{
+text-align: center;
+}
+           
+        </style>
+        <div>
+            <h1 class="animate-reveal animate-first">Checkers</h1>
+          </div>
+        
+
+          <div id = "div1">  
+                <div id="message" class="animate-reveal animate-second">Utwórz pokój</div>
+                <input type="text" id="room_name" name="Room name" placeholder="Wpisz nazwę pokoju..." class="animate-reveal animate-second"><br>
+                <input type="text" id="nick_name" name="Nick name" placeholder="Wpisz swój nickname..." class="animate-reveal animate-second"><br> 
+                <p style="color:red;" id="empty"></p>
+                <button id="create" class="animate-reveal animate-second">Utwórz</button><br>
+              <div id="message" class="animate-reveal animate-third">Lub  wybierz z listy:</div>
+              <p style="color:red;" id="empty_list"></p>
+              <ul id="room_list" class="animate-reveal animate-third">
+              </ul>
+              <input type="text" id="nick_name_2" name="Nick name" placeholder="Wpisz swój nickname..." class="animate-revealanimate-second"><br> 
+              <p style="color:red;" id="empty_2"></p>
+              <button id="open" class="animate-reveal animate-second">Wedjdź</button><br>
+            </div>
+        
+    </body>
+</html>
